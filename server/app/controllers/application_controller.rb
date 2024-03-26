@@ -1,8 +1,7 @@
 class ApplicationController < ActionController::API
-  SECRET = "yoursecretword"
+  SECRET = "myspecialkey"
 
   def authentication
-    # making a request to a secure route, token must be included in the headers
     decode_data = decode_user_data(request.headers["token"])
     # getting user id from a nested JSON in an array.
     user_data = decode_data[0]["user_id"] unless !decode_data

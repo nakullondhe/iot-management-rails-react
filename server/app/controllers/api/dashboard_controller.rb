@@ -4,7 +4,6 @@ class Api::DashboardController < ApplicationController
     alarm_count = Alarm.count
     scheduler_count = Scheduler.count
 
-    # Construct a hash containing the counts
     counts_hash = {
       device_count: device_count,
       alarm_count: alarm_count,
@@ -25,13 +24,8 @@ class Api::DashboardController < ApplicationController
                  "end\n" +
                  "#{custom_line_end}"
 
-  # Read the existing contents of the schedule file
   existing_content = File.read(schedule_file)
-
-  # Modify the contents to include the new lines
   updated_content = existing_content + "\n#{new_schedule}"
-
-  # Write the updated content back to the file
   File.write(schedule_file, updated_content)
 
     system("crontab -r")
