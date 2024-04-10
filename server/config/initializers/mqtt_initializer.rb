@@ -12,7 +12,6 @@ def init_mqtt
   mqtt_service = MqttClient.new
   mqtt_service.connect
   mqtt_service.subscribe
-
   mqtt_service.listen_for_messages
 
   # Gracefully disconnect from MQTT broker when Rails server shuts down

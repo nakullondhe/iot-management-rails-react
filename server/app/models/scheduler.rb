@@ -1,13 +1,13 @@
-require 'schedule_operations'
+require "schedule_operations"
 
 class Scheduler < ApplicationRecord
   enum action: { disable: 'disable', enable: 'enable' }
   attribute :executed, :boolean
   attribute :canceled, :boolean
-  after_commit :add_cron_job,  on: :create
-
+  after_commit :add_cron_job, on: :create
+  after_destroy :remove_cron_job
+  
   def self.update_executed_field(scheduler_id)
-    
     scheduler = Scheduler.find_by(id: scheduler_id)
 
     date_time = Time.parse(scheduler.date_time)
@@ -16,28 +16,33 @@ class Scheduler < ApplicationRecord
 
     if schedule_date != todays_date
       puts "Not the corrent date, will run again"
-    return  
+      return
     end
 
     device = Device.find_by(id: scheduler.device_id)
 
-    device.active = scheduler.action == 'enable' ? true : false
+    device.active = scheduler.action == "enable" ? true : false
     device.save
-
 
     if scheduler && !scheduler.executed
       scheduler.update(executed: true)
-      ScheduleOperations.remove_custom_job(scheduler_id)
+      ScheduleOperations.remove_custom_job(scheduler)
     else
-      puts "No need" 
+      puts "No need"
     end
   end
+
+  private
 
   def add_cron_job
     puts "after create"
     ScheduleOperations.add_custom_job(self)
   end
 
+  def remove_cron_job
+    puts 'xxxxxxxxxxxxxxxx after destroy xxxxxxxxxxxxxx'
+    ScheduleOperations.remove_custom_job(self)
+  end
 
   def compare_dates(datetime)
     date_time = Time.parse(datetime)
@@ -49,5 +54,4 @@ class Scheduler < ApplicationRecord
       return false
     end
   end
-
 end

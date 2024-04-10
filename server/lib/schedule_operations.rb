@@ -23,10 +23,11 @@ module ScheduleOperations
     system('whenever --update-crontab')
   end
 
-  def self.remove_custom_job(scheduler_id)
+  def self.remove_custom_job(schedule)
+    schedule_id = schedule.id
     schedule_file = "/home/nakul/rails_projects/dashboard/server/config/schedule.rb"
-    custom_line_start = "#custom:#{scheduler_id}:start"
-    custom_line_end = "#custom:#{scheduler_id}:end"
+    custom_line_start = "#custom:#{schedule_id}:start"
+    custom_line_end = "#custom:#{schedule_id}:end"
 
 
     existing_content = File.read(schedule_file)
@@ -34,6 +35,6 @@ module ScheduleOperations
     updated_content = existing_content.gsub(/#{custom_line_start}.*?#{custom_line_end}\n?/m, '')
 
     File.write(schedule_file, updated_content)
-    puts "Schedule with Id : #{scheduler_id} deleted succesfully"
+    puts "Schedule with Id : #{schedule_id} deleted succesfully"
   end
 end

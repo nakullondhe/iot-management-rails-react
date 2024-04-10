@@ -10,14 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_23_014204) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_06_125225) do
   create_table "alarms", force: :cascade do |t|
     t.string "device_id"
+    t.integer "threshold"
+    t.boolean "triggered"
+    t.string "unit"
     t.string "severity"
-    t.boolean "acknowledged"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "active"
+  end
+
+  create_table "api_pots", force: :cascade do |t|
+    t.string "title"
+    t.text "context"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "blogs", force: :cascade do |t|
@@ -29,13 +37,28 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_23_014204) do
 
   create_table "devices", force: :cascade do |t|
     t.string "name"
+    t.string "device_id"
     t.string "model"
     t.string "serial_number"
-    t.string "string"
     t.string "system_id"
+    t.string "unit"
+    t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "active"
+  end
+
+  create_table "poems", force: :cascade do |t|
+    t.string "title"
+    t.text "context"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
+    t.text "context"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "schedulers", force: :cascade do |t|

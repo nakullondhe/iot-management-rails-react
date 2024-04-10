@@ -42,7 +42,7 @@ class Api::DevicesController < ApplicationController
     end
 
     def device_params
-      params.require(:device).permit(:name, :deviceId, :imei, :model,:serial_number, :system_id)
+      params.require(:device).permit(:name, :device_id, :model,:serial_number, :system_id, :unit, :active)
     end
 
 

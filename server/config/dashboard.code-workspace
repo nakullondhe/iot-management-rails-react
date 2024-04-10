@@ -1,10 +1,13 @@
 {
 	"folders": [
 		{
-			"path": "../.."
+			"path": ".."
 		},
 		{
-			"path": ".."
+			"path": "../../client"
+		},
+		{
+			"path": "../../services/simulatorservice"
 		}
 	],
 	"settings": {}

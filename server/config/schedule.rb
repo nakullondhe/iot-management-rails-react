@@ -30,26 +30,17 @@ env :PATH, ENV['PATH']
 set :output, "./log/cron.log" 
 set :environment, "development"
 
-
 # every 1.minutes do
 #   runner 'Scheduler.update_executed_field(2)'
 # end
 
 
-#custom:24:start
- every 1.day at: '16:00' do
-   runner "Scheduler.update_executed_field(24)"
+#custom:34:start
+ every 1.day at: '11:22' do
+   runner "Scheduler.update_executed_field(34)"
  end
-#custom:24:end
+#custom:34:end
 
-#custom:25:start
- every 1.day at: '16:00' do
-   runner "Scheduler.update_executed_field(25)"
- end
-#custom:25:end
 
-#custom:26:start
- every 1.day at: '09:27' do
-   runner "Scheduler.update_executed_field(26)"
- end
-#custom:26:end
+
+

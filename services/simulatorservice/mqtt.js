@@ -17,7 +17,7 @@ function publishMessage(deviceId, value, unit) {
 
 function startPublishing(device, deviceFunctionsMap) {
   const intervalId = setInterval(() => {
-    let value = Math.random() * (device.upper - device.lower) + device.lower;
+    let value = Math.floor(Math.random() * (device.upper - device.lower) + device.lower)
     publishMessage(device.deviceId, value, device.unit);
   }, device.interval);
 
@@ -25,7 +25,7 @@ function startPublishing(device, deviceFunctionsMap) {
   deviceFunctionsMap.set(device.deviceId, () => clearInterval(intervalId));
 }
 
-client.on('connect', () => {
+client.on('connect', (dt) => {
   console.log(`Connected to ${brokerName} MQTT broker`);
 
   const deviceFunctionsMap = new Map();
@@ -35,23 +35,7 @@ client.on('connect', () => {
     startPublishing(device, deviceFunctionsMap);
   });
 
-  // client.subscribe(topic, (err) => {
-  //   if (err) {
-  //     console.error('Subscription error:', err);
-  //   } else {
-  //     console.log(`Subscribed to topic '${topic}'`);
-  //   }
-  // });
-
-
-  // publish(client, topic2, 'Hello from MQTT publisher!');
-  // console.log(`Published message to topic '${topic}'`);
 });
-
-// Handle incoming messages
-// client.on('message', (topic, message) => {
-//   console.log(`Received message on topic '${topic}': ${message.toString()}`);
-// });
 
 // Handle errors
 client.on('error', (error) => {

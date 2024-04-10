@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # resources :poems
+  # resources :posts
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -7,13 +9,15 @@ Rails.application.routes.draw do
 
   mount ActionCable.server => '/cable'
   
-  post 'auth/signup', to: 'users#new'
-  post 'auth/login', to: 'session#login'
+  post 'auth/signin', to: 'session#signin'
+  post 'auth/signup', to: 'users#create'
 
   namespace :api do
-    resources :blogs
+    # resources :pots
+    # resources :blogs
     resources :users, only: [:create, :show]
 
+    
     get '/getdashboarddata', to: 'dashboard#get_info'
     get '/add_job', to:'dashboard#modify_schedule_file'
     post '/remove_job', to:'dashboard#remove_custom_section'
